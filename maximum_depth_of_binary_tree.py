@@ -16,10 +16,11 @@
 
 # return its depth = 3.
 
-class Solution
-
-    maxDepth(self, root):
-        if root == None:
-            return 0
-        else:
-            max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        else:
+            l_depth = self.maxDepth(root.left)
+            r_depth = self.maxDepth(root.right)
+            return max(l_depth,r_depth)+1
