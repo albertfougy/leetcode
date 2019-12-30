@@ -11,8 +11,8 @@ class Solution
 # It is a so called "type hint" (or "function annotation"; these are available 
 # since Python 3.0).
 
-#     -> List[int] means that the function should return a list of integers.
-#     nums: List[int], target: int means that nums is expected to be a list of 
+# -> List[int] means that the function should return a list of integers.
+# nums: List[int], target: int means that nums is expected to be a list of 
 # integers and that target is expected to be an integer.
 
 # This is not a hard requirement, though, i.e. you can still call the function 
@@ -31,6 +31,6 @@ class Solution
 # Note that List is not available in the standard namespace (unlike list), but 
 # instead needs to be imported from typing which also
 
-#     provides other types for standard types, like Set, Dict, Tuple, Callable etc.
-#     allows to define own types
-#     provides typed versions of other types, like NamedTuple instead of namedtuple
+# provides other types for standard types, like Set, Dict, Tuple, Callable etc.
+# allows to define own types
+# provides typed versions of other types, like NamedTuple instead of namedtuple
