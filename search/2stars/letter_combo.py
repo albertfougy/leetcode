@@ -19,19 +19,45 @@
 # any order you want.
 
 
+# Iterative Solution
 class Solution:
+    # @return a list of strings, [s1, s2]
     def letterCombinations(self, digits):
-      def dfs(digits, d, l, cur, ans):
-        if l == len(digits):
-          if l > 0: ans.append("".join(cur))
-          return
-        
-        for c in d[ord(digits[l]) - ord('0')]:
-            cur[l] = c
-            dfs(digits, d, l + 1, cur, ans)
-        
-      d = [" ", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv","wxyz"]
-      cur = [' ' for _ in range(len(digits))]
-      ans = []
-      dfs(digits, d, 0, cur, ans)
-      return ans
+        if not digits:
+            return []
+            
+        lookup, result = ["", "", "abc", "def", "ghi", "jkl", "mno", \
+                          "pqrs", "tuv", "wxyz"], [""]
+
+        for digit in reversed(digits):
+            choices = lookup[int(digit)]
+            m, n = len(choices), len(result)
+            result += [result[i % n] for i in xrange(n, m * n)]    
+
+            for i in xrange(m * n):
+                result[i] = choices[i / n] + result[i] 
+            
+        return result
+
+# Time:  O(n * 4^n)
+# Space: O(n)
+# Recursive Solution
+class Solution2:
+    # @return a list of strings, [s1, s2]
+    def letterCombinations(self, digits):
+        if not digits:
+            return []
+        lookup, result = ["", "", "abc", "def", "ghi", "jkl", "mno", \
+                          "pqrs", "tuv", "wxyz"], []
+        self.letterCombinationsRecu(result, digits, lookup, "", 0)
+        return result
+    
+    def letterCombinationsRecu(self, result, digits, lookup, cur, n):
+        if n == len(digits):
+            result.append(cur)
+        else:
+            for choice in lookup[int(digits[n])]:
+                self.letterCombinationsRecu(result, digits, lookup, cur + choice, n + 1)
+
+if __name__ == "__main__":
+    print Solution().letterCombinations("23")
