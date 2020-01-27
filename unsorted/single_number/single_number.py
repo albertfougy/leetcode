@@ -2,10 +2,26 @@
 # except for one. Find that single one.
 from typing import List
 
-class Solution
+class Solution:
 
     def singleNumber(self, nums:[List])-> int:
-        return int((sum(set(nums))*3-sum(nums))/2)
+        """
+        first solution but non-efficient. 
+        subtracting the sum of set number (remove dupes) from sum of original
+        """
+        return 2 * sum(set(nums)) - sum(nums)
+
+    def singleNumber2(self, nums:[List])-> int:
+        """ more efficient using XOR """
+        single = 0
+        for num in nums:
+            single ^= num
+        return single
+
+    
+
+
+
 
 
 # It is a so called "type hint" (or "function annotation"; these are available 

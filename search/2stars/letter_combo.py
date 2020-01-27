@@ -62,5 +62,5 @@ class Solution:
 
 
 if __name__ == "__main__":
-  print(Solution().letterCombinations("23"))
+  print(Solution().letterCombinations("99"))
   
