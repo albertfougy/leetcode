@@ -80,5 +80,22 @@ class Solution:
                 step_2 = res
             return res
 
-Time: O(n)
-Space: O(1)
+    def climbStairs(self, n):
+        if n in (1, 2):
+            return n
+        else:
+            a, b = 0, 1
+            for _ in range(n + 1):
+                a, b = b, a + b
+            return a
+
+# Time: O(n)
+# Space: O(1)
+
+# Similar questions:
+
+# 91. Decode ways
+# 62. Unique Paths
+# 509. Fibonacci Number
+
+# Practice them in a row for better understanding
