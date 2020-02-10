@@ -1,11 +1,22 @@
 # Given a non-empty array of integers, every element appears twice 
 # except for one. Find that single one.
+
 from typing import List
 
-class Solution
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        return 2 * sum(set(nums)) - sum(nums)
 
-    def singleNumber(self, nums:[List])-> int:
-        return int((sum(set(nums))*3-sum(nums))/2)
+    def singleNumber2(self, nums: List[int]) -> int:
+        sngle = 0
+        for num in range(len(nums)):
+            sngle ^= num
+        return num
+
+
+if __name__ == "__main__":
+    print(Solution().singleNumber([4,1,2,1,2]))
+
 
 
 # It is a so called "type hint" (or "function annotation"; these are available 
