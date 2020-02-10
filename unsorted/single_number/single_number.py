@@ -1,3 +1,5 @@
+# 136. Single  Number
+
 # Given a non-empty array of integers, every element appears twice 
 # except for one. Find that single one.
 
@@ -5,9 +7,11 @@ from typing import List
 
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
+        """ Using set DS to find number """
         return 2 * sum(set(nums)) - sum(nums)
 
     def singleNumber2(self, nums: List[int]) -> int:
+        """ Using XOR """
         sngle = 0
         for num in range(len(nums)):
             sngle ^= num
