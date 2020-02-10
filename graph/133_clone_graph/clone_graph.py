@@ -1,53 +1,124 @@
-# Breadth First Search
+# 133. Clone a Graph
+# 
 
-# Clone an undirected graph. Each node in the graph contains a label and a list 
-# of its neighbors.
+# Python 3
+# A Pythonic Detailed step-by-step explanation in BFS (below)
+# https://www.youtube.com/watch?v=Jx3Cz_A60Oc&t=256s
 
-# OJ's undirected graph serialization:
-# Nodes are labeled uniquely.
-# We use "#" as a separator for each node, and , as a separator for node label 
-# and each neighbor of the node.
-# As an example, consider the serialized graph {0,1,2#1,2#2,2}.
-# The graph has a total of three nodes, and therefore contains three parts as 
-# separated by "#".
-# First node is labeled as 0. Connect node 0 to both nodes 1 and 2.
-# Second node is labeled as 1. Connect node 1 to node 2.
-# Third node is labeled as 2. Connect node 2 to node 2 (itself), thus forming a 
-# self-cycle.
-
-# Visually, the graph looks like the following:
-#        1
-#       / \
-#      /   \
-#     0 --- 2
-#          / \
-#          \_/
-
-# ---
-
-# Definition for a undirected graph node
-# class UndirectedGraphNode:
-#     def __init__(self, x):
-#         self.label = x
-#         self.neighbors = []
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = []):
+        self.val = val
+        self.neighbors = neighbors
+"""
 
 class Solution:
-    # @param node, a undirected graph node
-    # @return a undirected graph node
-    def cloneGraph(self, node):
-        nodeMap = {}
-        return self.cloneNode(node, nodeMap)
-    
-    def cloneNode(self, node, nodeMap):
+    """ Breadth First Search with Queue """
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        # case when graph is empty
+        # return None
         if node == None:
             return None
-        if node.label in nodeMap:
-            return nodeMap[node.label]
-        newNode = UndirectedGraphNode(node.label)
-        nodeMap[node.label] = newNode
+
+        # initialize queue with reference node: node
+        queue = [node]
+        # create root node (reference node)
+        root = Node(node.val, [])
+        # initialize hashMap ( Dictionary in Python )
+        hashMap = {}
+        # put the root in hashMap
+        hashMap[node] = root
+        # bfs continue as long as queue is not empty
+        while (len(queue) !=0):
+            # take current element form queue
+            curr = queue.pop(0)
+            # iterate neighbors
+            for i in curr.neighbors:
+                # check if neighbor is in hashMap. if neighbor is not in hashMap
+                if i not in hashMap:
+                    # create node(neighbor)
+                    newNode = Node(i.val, [])
+                    # add node to hashmap key is value, and value is the node(neighbor)
+                    hashMap[i] = newNode
+                    # append original neighbor node to queue
+                    queue.append(i)
+                # add the neighbor node to current node.neighbors
+                hashMap[curr].neighbors.append(hashMap[i])
+        return root
+
+
+
+# Python3
+# Depth First Search with Stack
+# Just use DFS approach by help from a stack for running through entire graph.
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = []):
+        self.val = val
+        self.neighbors = neighbors
+"""
+
+class Solution:
+    def cloneGraph(self, node):
+        if not node:
+            return 
+        nodeCopy = Node(node.val, [])
+        dic = {node: nodeCopy}
+        stack = [node]
+        while stack:
+            node = stack.pop()
+            for neighbor in node.neighbors:
+                if neighbor not in dic:
+                    neighborCopy = Node(neighbor.val, [])
+                    dic[neighbor] = neighborCopy
+                    dic[node].neighbors.append(neighborCopy)
+                    stack.append(neighbor)
+                else:
+                    dic[node].neighbors.append(dic[neighbor])
+        return nodeCopy
+
+# Python3
+# Depth First Search with Recursion
+# Use call stack for DFS approach. This one is cleaner and more beautiful.
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = []):
+        self.val = val
+        self.neighbors = neighbors
+"""
+
+class Solution:
+    def cloneGraph(self, node):
+        if not node:
+            return 
+        nodeCopy = Node(node.val, [])
+        dic = {node: nodeCopy}
+        self.dfs(node, dic)
+        return nodeCopy
+
+    def dfs(self, node, dic):
         for neighbor in node.neighbors:
-            newNode.neighbors.append(self.cloneNode(neighbor, nodeMap))
-        return newNode
+            if neighbor not in dic:
+                neighborCopy = Node(neighbor.val, [])
+                dic[neighbor] = neighborCopy
+                dic[node].neighbors.append(neighborCopy)
+                self.dfs(neighbor, dic)
+            else:
+                dic[node].neighbors.append(dic[neighbor])
+
+
+# Detailed explanation on YouTube in Java
+# https://www.youtube.com/watch?v=e5tNvT1iUXs
+
+# Understanding Graph Algorithms with Breadth First & Depth First
+# https://www.youtube.com/watch?v=bIA8HEEUxZI
+
+# ---
 
 # The dictionary (or HashTable) is just used to keep the nodes that we have cloned already.
 
