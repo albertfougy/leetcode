@@ -13,7 +13,7 @@ class Solution:
     def singleNumber2(self, nums: List[int]) -> int:
         """ Using XOR """
         sngle = 0
-        for num in range(len(nums)):
+        for num in nums:
             sngle ^= num
         return num
 
