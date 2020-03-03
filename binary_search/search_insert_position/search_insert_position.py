@@ -1,5 +1,5 @@
 class Solution:
-    def searchInsert(self, A, target):
+    def searchInsert(self, nums: List[int], target: int) -> int:
         '''
         Given a sorted array and a target value, return the index if the target
         is found. If not, return the index where it would be if it were inserted in order.
@@ -10,21 +10,44 @@ class Solution:
         [1,3,5,6], 7 >> 4
         [1,3,5,6], 0 >> 0 
         '''
-        if len(A) == 0:
-            return -1
-        if target <= A[0]:
+        n = len(nums)
+        if n == 0 or target <= nums[0]: 
             return 0
-        l = 0
-        r = len(A) - 1
-        while l <= r:
-            mid = (l + r) // 2
-            if A[mid] == target:
-                if mid > 0 and A[mid - 1] == target:
-                    r = mid - 1
-                else:
-                    return mid
-            elif A[mid] > target:
-                r = mid - 1
+        if target > nums[n-1]: 
+            return n
+        left, right = 0, n-1
+        while left < right:
+            mid = (left+right)//2
+            if target == nums[mid]: 
+                return mid
+            if target > nums[mid]: 
+                left = mid+1
+            else: 
+                right = mid-1
+        if target > nums[left]: 
+            return left+1
+        else: 
+            return left
+
+# 1st Refactor
+    def searchInsert2(self, nums: List[int], target: int) -> int:
+        left=0
+        right=len(nums)-1
+        while left<=right:
+            mid=int((left+right)/2)
+            if nums[mid]==target:
+                return mid
+            elif nums[mid]>target:
+                right=mid-1
             else:
-                l = mid + 1
-        return l
+                left=mid+1
+        return left
+
+# 2nd Refactor using for loop
+    def searchInsert3(self, nums: List[int], target: int) -> int:
+        for i in range(len(nums)):
+            if nums[i]==target:
+                return i
+            elif target<nums[i]:
+                return i
+        return len(nums)
