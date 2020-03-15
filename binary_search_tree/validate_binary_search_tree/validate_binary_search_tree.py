@@ -6,6 +6,8 @@
 #         self.right = None
 
 class Solution:
+	# inf / -inf acts as an unbounded upper/lower value for comparison. 
+	# This is useful for finding lowest/highest values for something. 
     def isValidBST(self, root, floor=float('-inf'), ceiling=float('inf')):
         if not root: 
             return True
