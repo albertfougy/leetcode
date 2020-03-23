@@ -43,7 +43,24 @@ class Solution:
                 left=mid+1
         return left
 
-# 2nd Refactor using for loop
+# 2nd Refactor
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        i = 0
+        j = len(nums) - 1
+        while i <= j:
+            mid = i + (j - i)//2
+            if nums[mid] == target:
+                return mid
+            elif target < nums[mid]:
+                j = mid - 1
+            else:
+                i = mid + 1
+        return i
+
+
+
+
+# 3rd Refactor using for loop
     def searchInsert3(self, nums: List[int], target: int) -> int:
         for i in range(len(nums)):
             if nums[i]==target:
