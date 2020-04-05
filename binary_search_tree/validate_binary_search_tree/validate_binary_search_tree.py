@@ -17,3 +17,5 @@ class Solution:
         # contrarily root is the new floor in right branch
         return self.isValidBST(root.left, floor, root.val) and \
             self.isValidBST(root.right, root.val, ceiling)
+
+
