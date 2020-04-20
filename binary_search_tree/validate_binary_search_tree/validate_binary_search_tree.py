@@ -5,17 +5,27 @@
 #         self.left = None
 #         self.right = None
 
+
 class Solution:
-	# inf / -inf acts as an unbounded upper/lower value for comparison. 
-	# This is useful for finding lowest/highest values for something. 
-    def isValidBST(self, root, floor=float('-inf'), ceiling=float('inf')):
-        if not root: 
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        # inf / -inf acts as an unbounded ceiling/floor value for comparison.
+        # This is useful for finding lowest/highest values for something.
+        def helper(node, floor = float('-inf'), ceiling = float('inf')):
+            if not node:
+                return True
+
+            val = node.val
+            if val <= floor or val >= ceiling:
+                return False
+
+            if not helper(node.right, val, ceiling):
+                return False
+            if not helper(node.left, floor, val):
+                return False
             return True
-        if root.val <= floor or root.val >= ceiling:
-            return False
-        # in the left branch, root is the new ceiling; 
-        # contrarily root is the new floor in right branch
-        return self.isValidBST(root.left, floor, root.val) and \
-            self.isValidBST(root.right, root.val, ceiling)
 
-
+        return helper(root)

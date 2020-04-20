@@ -24,4 +24,4 @@ class Solution:
 						hashMap[i] = newNode
 						queue.append(i)
 					hashMap[curr].neighbors.append(hashMap[i])
-        return root
+            return root
