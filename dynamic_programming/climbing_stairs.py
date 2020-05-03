@@ -29,57 +29,58 @@
 
 # Time: O(2^n)
 # Space: O(n)
-	
 
-class Solution:
-    def climbStairs(self, n):
-        """
-        :type n: int
-        :rtype: int
-        """
-        if n == 0 or n == 1 or n == 2 or n == 3:
-            return n
-        else:
-            return self.climbStairs(n-1)+self.climbStairs(n-2)
+
+# class Solution:
+#     def climbStairs(self, n):
+#         """
+#         :type n: int
+#         :rtype: int
+#         """
+#         if n == 0 or n == 1 or n == 2 or n == 3:
+#             return n
+#         else:
+#             return self.climbStairs(n-1)+self.climbStairs(n-2)
 
 # This solution will experience runtime error
 
 
 # Solution 2 memoization
 
-class Solution:
-    cache = {}    
-    def climbStairs(self, n):
-        if n < 3:
-            return n
-        else:
-            return self._climbStairs(n-1) + self._climbStairs(n-2)
-    def _climbStairs(self, n):
-        if n not in self.cache.keys():
-            self.cache[n] = self.climbStairs(n)
-        return self.cache[n]
+# class Solution:
+#     cache = {}
+#     def climbStairs(self, n):
+#         if n < 3:
+#             return n
+#         else:
+#             return self._climbStairs(n-1) + self._climbStairs(n-2)
+#
+#     def _climbStairs(self, n):
+#         if n not in self.cache.keys():
+#             self.cache[n] = self.climbStairs(n)
+#         return self.cache[n]
 
 # use memoization to reduce redundant processing
 
 
 # Solution 3 Loop Fibonacci
 
-class Solution:
-    def climbStairs(self, n):
-        """
-        :type n: int
-        :rtype: int
-        """
-        if n == 0 or n == 1 or n == 2:
-            return n
-        else:
-            res, step_1, step_2 = 0,1,2
-            for i in range(2, n):
-                res = step_2 + step_1
-                step_1 = step_2
-                step_2 = res
-            return res
-
+# class Solution:
+#     def climbStairs(self, n):
+#         """
+#         :type n: int
+#         :rtype: int
+#         """
+#         if n == 0 or n == 1 or n == 2:
+#             return n
+#         else:
+#             res, step_1, step_2 = 0,1,2
+#             for i in range(2, n):
+#                 res = step_2 + step_1
+#                 step_1 = step_2
+#                 step_2 = res
+#             return res
+#
     def climbStairs(self, n):
         if n in (1, 2):
             return n
