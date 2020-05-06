@@ -1,28 +1,48 @@
-# Using greedy strategy, we want to remove such digit that with higher base d (10^d) 
-# and with higher value itself comparing to its successor. So we can use a monotonic 
-# queue and keep rolling out the value we want to remove, also keep an eye on k 
-# because we don't want to remove more than k digits.
-# If no such complete removal( must be k times) happend (none or less than k times, hence the break - else flow), 
-# it means that some ratty digit(s) remain in the list and it forms a monotonically 
-# increasing trend, so we need to pop them off from tail.
-# Also you need to deal with heading zeros.
+# The way to make the number as small as possible is that make the rightmost digit as small as possible.
 
-def removeKdigits(self, num: 'str', k: 'int') -> 'str':
-        if not k:
-            return num
-        Q=collections.deque()
+# We know we can remove at most the k digit to generate a new digit
+# so we can add/remove until k == 0
+
+# Example "1432219"
+# []
+# ['1'] => since stack is empty , just add into stack
+# ['1', '4'] => since 1 < 4, we do not need to replace
+# ['1', '3'] => since 3 is less than 4, and we have k(3)-- times able to remove,so we can
+# replace 4 with 3
+# ['1', '2'] => 2 < 3, replace 3 with 2 k(2) --
+# ['1', '2', '2'] => 2 == 2, continue
+# ['1', '2', '1'] => since 1 < 2, replace it k(1)--
+# ['1', '2', '1', '9'] => does not matter if the next number is lesser or greater, since k is zero, we
+# can not remove any more digits, so this is the end of program.
+
+class Solution:
+    def removeKdigits(self, num: str, k: int) -> str:
+        """
+        :type num: str
+        :type k: int
+        :rtype: str
+        """
+        stack = []
         for i in range(len(num)):
-            while Q and num[i]<Q[-1] and k>0:
-                k-=1
-                Q.pop()
-            Q.append(num[i])
-            if k<=0:
-                Q+=list(num[i+1:])
+            
+            while True:
+                if  k == 0 or not stack:
+                    break
+                
+                if stack[-1] > num[i]:
+                    k -= 1
+                    stack.pop()
+                else:
+                    break
+            stack.append(num[i])
+        while k != 0:
+            stack.pop()
+            k -= 1
+        for i in range(len(stack)):
+            if stack[i] != "0":
                 break
-        else:
-            while(k>0):
-                Q.pop()
-                k-=1
-        while(Q and Q[0]=='0'):
-            Q.popleft()
-        return ''.join(Q) if Q else '0'
+        stack = stack[i:]
+
+        if not stack:
+            return "0"
+        return "".join(stack)
