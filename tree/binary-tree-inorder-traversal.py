@@ -22,7 +22,7 @@ class TreeNode:
         self.left = None
         self.right = None
 
-
+class Solution:
 # recursively
     def inorderTraversal(self, root: TreeNode) -> List[int]:
         result = []

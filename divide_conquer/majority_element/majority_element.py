@@ -24,7 +24,7 @@ class Solution:
                 return nums[lo]
 
             # recurse on left and right halves of this slice.
-            mid = (hi-lo)//2 + lo
+            mid = (hi-lo)//2
             left = majority_element_rec(lo, mid)
             right = majority_element_rec(mid+1, hi)
 
