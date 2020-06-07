@@ -15,7 +15,6 @@ class Solution(object):
         
         # build an empty matrix
         matrix = [[1 for j in range(n)]for i in range(m)]
-        print(matrix)
         
         # record steps for each cell using DP (Expect the first row and the 
         # first column, since there are only one way to get the cells in these places..)
